@@ -16,7 +16,6 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     setUser(user: User) {
-      console.log(user);
       this.user = {
         ...user,
       };

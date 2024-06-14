@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-start">
-    <div class="col-lg-5 col-md-12 q-mx-xl">
+    <div class="col-12">
       <div
         class="q-pa-md"
         style="max-width: 700px"
@@ -115,7 +115,7 @@
               rounded
               type="submit"
               class="full-width btn rounded glossy"
-              color="info q-pa-lg"
+              color="info q-pa-md"
               label="Fazer cadastro"
             />
           </div>
