@@ -1,8 +1,8 @@
 <template>
-  <q-page class="row items-center justify-start">
-    <div
-      class="col-xl-5 col-lg-8 col-md-12 q-mx-xl"
-    >
+  <q-page
+    class="row items-center justify-center q-mx-xl"
+  >
+    <div class="col-12">
       <div
         class="q-pa-md"
         style="max-width: 700px"
@@ -73,7 +73,7 @@
               rounded
               type="submit"
               class="full-width btn rounded glossy"
-              color="info q-pa-lg"
+              color="info q-pa-md"
               label="Fazer Login"
             />
           </div>
@@ -124,7 +124,6 @@
           response.data.token,
         );
         userStore.setUser(user);
-        console.log(userStore.getUserEmail);
         showPositiveNotify(
           `Seja bem vindo ${user.name}`,
         );

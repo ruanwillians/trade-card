@@ -1,6 +1,8 @@
 <template>
   <q-page class="row items-center justify-start">
-    <div class="col-lg-4 col-md-12 q-mx-xl">
+    <div
+      class="col-lg-4 col-md-4 col-sm-6 q-mx-xl"
+    >
       <h1 class="text-info text-bold title">
         O Maior mercado de trade de Cards!
       </h1>
@@ -12,7 +14,7 @@
       <q-btn
         rounded
         class="full-width btn rounded glossy"
-        color="info q-pa-lg"
+        color="info q-pa-md"
         label="Ver negociações"
       />
     </div>
