@@ -39,8 +39,15 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
+      env: require('dotenv').config().parsed,
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+        browser: [
+          'es2019',
+          'edge88',
+          'firefox78',
+          'chrome87',
+          'safari13.1',
+        ],
         node: 'node20',
       },
 
@@ -68,10 +75,12 @@ module.exports = configure(function (/* ctx */) {
           'vite-plugin-checker',
           {
             vueTsc: {
-              tsconfigPath: 'tsconfig.vue-tsc.json',
+              tsconfigPath:
+                'tsconfig.vue-tsc.json',
             },
             eslint: {
-              lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+              lintCommand:
+                'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
             },
           },
           { server: false },
@@ -97,7 +106,7 @@ module.exports = configure(function (/* ctx */) {
           'dark-page': '#121212',
 
           positive: '#21BA45',
-          negative: '#C10015',
+          negative: '#e54a65',
           info: '#e54a65',
           warning: '#F2C037',
         },
@@ -114,7 +123,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Notify', 'Dialog'],
     },
 
     // animations: 'all', // --- includes all animations
