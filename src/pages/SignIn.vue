@@ -1,5 +1,7 @@
 <template>
-  <q-page class="row items-center justify-start">
+  <q-page
+    class="row items-center justify-start q-mx-xl"
+  >
     <div class="col-12">
       <div
         class="q-pa-md"

@@ -39,7 +39,7 @@
   };
 
   const links: RouteLink[] = [
-    { to: '/', text: 'Trades' },
+    { to: '/', text: 'Home' },
     { to: '/login', text: 'Login' },
     { to: '/sigin', text: 'Sing-in' },
   ];
