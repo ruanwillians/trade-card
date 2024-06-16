@@ -5,3 +5,7 @@ export interface Card {
   imageUrl: string;
   createdAt: string;
 }
+
+export interface AddCards {
+  cardIds: string[];
+}

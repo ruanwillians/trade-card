@@ -14,9 +14,11 @@ const tradeCardApi = axios.create({
 
 tradeCardApi.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('Token');
     if (token) {
-      config.headers['Authorization'] = token;
+      config.headers[
+        'Authorization'
+      ] = `Bearer ${token}`;
     }
     return config;
   },
@@ -27,7 +29,6 @@ tradeCardApi.interceptors.request.use(
 
 export default boot(({ app }) => {
   app.config.globalProperties.$axios = axios;
-
   app.config.globalProperties.$api = tradeCardApi;
 });
 

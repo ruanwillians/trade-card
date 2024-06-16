@@ -23,9 +23,31 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/',
+    component: () =>
+      import('layouts/UserLayout.vue'),
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem('Token');
 
-  // Always leave this as last one,
-  // but you can also remove it
+      if (token) {
+        next();
+      } else {
+        next('/');
+      }
+    },
+    children: [
+      {
+        path: 'cards',
+        component: () =>
+          import('pages/CardsPage.vue'),
+        meta: {
+          requiresAuth: true,
+        },
+      },
+    ],
+  },
+
   {
     path: '/:catchAll(.*)*',
     component: () =>
