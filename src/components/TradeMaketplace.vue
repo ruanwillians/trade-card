@@ -90,11 +90,7 @@
   } from 'vue';
   import { getTrades } from 'src/services/Trades';
   import { Trade } from '../types/Trades';
-  import {
-    hideLoading,
-    showLoading,
-    showNegativeNotify,
-  } from 'src/utils/plugins';
+  import { showNegativeNotify } from 'src/utils/plugins';
   import FlipCard from '../components/FlipCard.vue';
   import { formatDate } from '../utils/FormatDate';
 
@@ -126,7 +122,6 @@
     page: number,
   ) => {
     try {
-      showLoading('Carregando negociações');
       const { status, data } = await getTrades(
         page,
       );
@@ -141,8 +136,6 @@
       showNegativeNotify(
         'Não foi possível buscar as informações de negociações',
       );
-    } finally {
-      hideLoading();
     }
   };
 

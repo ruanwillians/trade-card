@@ -2,38 +2,57 @@
   <q-item
     clickable
     tag="a"
-    target="_blank"
-    :href="link"
+    :class="{ active: isActive }"
+    @click="goTo(to)"
   >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
-      <q-icon :name="icon" />
+    <q-item-section v-if="icon" avatar>
+      <q-icon :name="icon" color="white" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label class="text-bold text-white">
+        {{ title }}
+      </q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'EssentialLink'
-});
+  import { computed } from 'vue';
+  import {
+    useRouter,
+    useRoute,
+  } from 'vue-router';
 
-export interface EssentialLinkProps {
-  title: string;
-  caption?: string;
-  link?: string;
-  icon?: string;
-};
+  defineOptions({
+    name: 'EssentialLink',
+  });
 
-withDefaults(defineProps<EssentialLinkProps>(), {
-  caption: '',
-  link: '#',
-  icon: '',
-});
+  export interface EssentialLinkProps {
+    title: string;
+    to: string;
+    icon?: string;
+  }
+
+  const props = defineProps<EssentialLinkProps>();
+
+  const router = useRouter();
+  const route = useRoute();
+
+  const goTo = (to: string) => {
+    router.push(to);
+  };
+
+  const isActive = computed(
+    () => route.path === props.to,
+  );
 </script>
+
+<style scoped>
+  .active {
+    background-color: var(--q-info);
+    color: white;
+    border-radius: 50px;
+    margin: 3px;
+  }
+</style>
