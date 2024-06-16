@@ -93,12 +93,15 @@
     showNegativeNotify,
     showPositiveNotify,
   } from 'src/utils/plugins';
+  import { useRouter } from 'vue-router';
 
   const email = ref('');
   const password = ref('');
   const visiblePassword = ref(false);
   const loading = ref(false);
   const userStore = useUserStore();
+
+  const router = useRouter();
 
   const onReset = () => {
     email.value = '';
@@ -127,6 +130,7 @@
         showPositiveNotify(
           `Seja bem vindo ${user.name}`,
         );
+        router.push('/cards');
       } else {
         showNegativeNotify(
           'Não foi possível realizar o login, verifique seu email e senha',
