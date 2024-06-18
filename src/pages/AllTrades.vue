@@ -1,10 +1,13 @@
 <template>
-  <q-page class="row" id="tradeMarketplacePage">
-    <div class="marketplace-page">
+  <q-page
+    class="row q-pa-md"
+    id="tradeMarketplacePage"
+  >
+    <div>
       <h1
-        class="text-white q-ma-sm rounded-borders title text-bold q-ml-md"
+        class="text-white q-ma-none rounded-borders title text-bold q-ml-md q-mt-md"
       >
-        Todas as negociações
+        Negociações
       </h1>
       <TradeMaketplace
         @actionScroll="scrollToNegotiations"
@@ -15,16 +18,7 @@
 
 <script setup lang="ts">
   import TradeMaketplace from 'src/components/TradeMaketplace.vue';
-  const scrollToNegotiations = () => {
-    const element = document.querySelector(
-      '#tradeMarketplacePage',
-    );
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-      });
-    }
-  };
+  import { scrollToNegotiations } from 'src/utils/Scroll';
 </script>
 
 <style scoped>
@@ -43,10 +37,6 @@
 
   .btn {
     font-size: 1.5em;
-  }
-  .marketplace-page {
-    margin-top: 5em;
-    width: 100vw;
   }
 
   @media (max-width: 720px) {

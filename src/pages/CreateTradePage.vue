@@ -98,7 +98,7 @@
             <h1
               class="text-white q-ma-sm rounded-borders title text-bold"
             >
-              Todas as cartas
+              Todas cartas
             </h1>
           </template>
           <template v-slot:top-right>
@@ -227,10 +227,13 @@
   import CardTrade from '../components/CardTrade.vue';
   import DeckTrade from '../components/DeckTrade.vue';
   import { createTrade } from 'src/services/Trades';
+  import { useRouter } from 'vue-router';
 
   defineOptions({
     name: 'DeckPage',
   });
+
+  const router = useRouter();
 
   const tab = ref<string>('offering');
   const page = ref<number>(1);
@@ -343,6 +346,7 @@
         showPositiveNotify(
           'Negociação criada com sucesso',
         );
+        router.push('/trade');
       }
     } catch (error) {
       showNegativeNotify(
