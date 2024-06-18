@@ -35,16 +35,7 @@
 
 <script setup lang="ts">
   import TradeMaketplace from 'src/components/TradeMaketplace.vue';
-  const scrollToNegotiations = () => {
-    const element = document.querySelector(
-      '#tradeMarketplacePage',
-    );
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-      });
-    }
-  };
+  import { scrollToNegotiations } from 'src/utils/Scroll';
 </script>
 
 <style scoped>
