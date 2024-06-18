@@ -16,5 +16,4 @@ export const useDeckStore = defineStore('deck', {
       this.showDeckState = false;
     },
   },
-  persist: true,
 });

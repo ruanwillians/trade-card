@@ -9,3 +9,7 @@ export interface Card {
 export interface AddCards {
   cardIds: string[];
 }
+
+export interface CardProps {
+  card: Card;
+}

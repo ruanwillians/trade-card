@@ -4,13 +4,20 @@
     tag="a"
     :class="{ active: isActive }"
     @click="goTo(to)"
+    class="q-my-xs q-py-lg"
   >
     <q-item-section v-if="icon" avatar>
-      <q-icon :name="icon" color="white" />
+      <q-icon
+        :name="icon"
+        color="white"
+        size="1.5rem"
+      />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label class="text-bold text-white">
+      <q-item-label
+        class="text-bold text-white menu-item"
+      >
         {{ title }}
       </q-item-label>
     </q-item-section>
@@ -52,7 +59,9 @@
   .active {
     background-color: var(--q-info);
     color: white;
-    border-radius: 50px;
-    margin: 3px;
+  }
+
+  .menu-item {
+    font-size: 17px;
   }
 </style>

@@ -1,13 +1,13 @@
 import {
   Loading,
   Notify,
-  QSpinner,
+  QSpinnerBars,
 } from 'quasar';
 
 export function showLoading(message: string) {
   Loading.show({
     message: message,
-    spinner: QSpinner,
+    spinner: QSpinnerBars,
     spinnerColor: 'primary',
   });
 }

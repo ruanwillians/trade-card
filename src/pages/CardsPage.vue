@@ -6,7 +6,6 @@
       :columns="columns"
       row-key="name"
       selection="multiple"
-      v-model:selected="selected"
       :rows-per-page-options="[12]"
       :filter="filter"
       grid
@@ -39,32 +38,16 @@
         <div
           class="q-px-md col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
         >
-          <q-card class="card">
-            <q-card-section
-              class="column items-center"
-            >
-              <FlipCard
-                :card="props.row"
-                class="q-mb-sm"
-              />
-              <div class="subtitle-card">
-                <h5
-                  class="row q-ma-none q-my-md q-mx-sm text-center text-bold items-center"
-                >
-                  {{ props.row.name }}
-                </h5>
-              </div>
-
-              <q-btn
-                rounded
-                style="width: 90%"
-                class="glossy q-mb-md"
-                color="info"
-                label="Adicionar ao deck"
-                @click="confirm(props.row)"
-              />
-            </q-card-section>
-          </q-card>
+          <CardTrade :card="props.row">
+            <q-btn
+              rounded
+              style="width: 90%"
+              class="glossy q-mb-md"
+              color="info"
+              label="Adicionar ao deck"
+              @click="confirm(props.row)"
+            />
+          </CardTrade>
         </div>
       </template>
     </q-table>
@@ -90,9 +73,9 @@
     showPositiveNotify,
   } from 'src/utils/plugins';
   import { Column } from 'src/types/Table';
-  import FlipCard from 'src/components/FlipCard.vue';
   import { AddCards } from 'src/types/Cards';
   import { Dialog } from 'quasar';
+  import CardTrade from '../components/CardTrade.vue';
 
   defineOptions({
     name: 'DeckPage',
@@ -104,7 +87,6 @@
 
   const page = ref<number>(1);
   const filter = ref<string>('');
-  const selected = ref<Card[]>([]);
 
   const columns: Column[] = [
     {
@@ -157,11 +139,11 @@
     }
   };
 
-  function confirm(props: {
+  const confirm = (props: {
     name: string;
     imageUrl: string;
     id: string;
-  }) {
+  }) => {
     Dialog.create({
       color: 'info',
       dark: true,
@@ -181,7 +163,7 @@
       const body = generateBody(props.id);
       addCardsToDeck(body);
     });
-  }
+  };
 
   const generateBody = (id: string): AddCards => {
     return {

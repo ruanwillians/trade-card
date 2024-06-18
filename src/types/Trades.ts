@@ -1,5 +1,7 @@
 import { Card } from './Cards';
 
+export type TypeTrade = 'OFFERING' | 'RECEIVING';
+
 export interface Trade {
   id: string;
   userId: string;
@@ -12,6 +14,13 @@ export interface TradeCard {
   id: string;
   cardId: string;
   tradeId: string;
-  type: 'OFFERING' | 'RECEIVING';
+  type: TypeTrade;
   card: Card;
+}
+
+export interface AddTrades {
+  cards: {
+    cardId: string;
+    type: TypeTrade;
+  }[];
 }
