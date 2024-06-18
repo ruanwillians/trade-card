@@ -20,14 +20,10 @@
 </template>
 
 <script setup lang="ts">
-  import { Card } from '../types/Cards';
+  import { CardProps } from '../types/Cards';
   defineOptions({
     name: 'FlipCard',
   });
-
-  export interface CardProps {
-    card: Card;
-  }
 
   defineProps<CardProps>();
 </script>

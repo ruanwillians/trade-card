@@ -1,79 +1,95 @@
 <template>
   <div class="q-px-lg q-py-md">
-    <q-timeline
-      v-for="trade in trades"
-      :key="trade.id"
-      :layout="layout"
-      color="info"
+    <q-inner-loading
       dark
+      :showing="loading"
+      label-class="text-primary"
+      label-style="font-size: 1.1em"
     >
-      <q-timeline-entry
-        :title="
-          trade.user?.name || 'Usuário Anônimo'
-        "
-        :subtitle="formatDate(trade.createdAt)"
-        side="left"
-        icon="account_circle"
-      >
-        <h4
-          class="row justify-center text-bold bg-secondary rounded-borders"
-        >
-          Ofertou
-        </h4>
-        <div
-          class="row q-gutter-lg justify-end"
-          :class="{
-            'justify-center':
-              useQuasar().screen.lt.sm,
-            'justify-end':
-              !useQuasar().screen.lt.sm,
-          }"
-        >
-          <FlipCard
-            v-for="cardEntry in trade.tradeCards.filter(
-              card => card.type === 'OFFERING',
-            )"
-            :key="cardEntry.id"
-            :card="cardEntry.card"
-          />
-        </div>
-      </q-timeline-entry>
-      <q-timeline-entry
-        side="right"
-        icon="published_with_changes"
-      >
-        <h4
-          class="row justify-center text-bold bg-info rounded-borders"
-        >
-          Quer Receber
-        </h4>
-        <div
-          class="row q-gutter-lg"
-          :class="{
-            'justify-center':
-              useQuasar().screen.lt.sm,
-            'justify-start':
-              !useQuasar().screen.lt.sm,
-          }"
-        >
-          <FlipCard
-            v-for="cardEntry in trade.tradeCards.filter(
-              card => card.type === 'OFFERING',
-            )"
-            :key="cardEntry.id"
-            :card="cardEntry.card"
-          />
-        </div>
-      </q-timeline-entry>
-    </q-timeline>
-    <div class="q-pa-lg flex flex-center">
-      <q-pagination
-        v-model="page"
-        color="info"
-        :max="4"
-        boundary-links
-        @click="handlePageClick"
+      <q-spinner-bars
+        size="50px"
+        color="primary"
       />
+      <p class="text-white q-my-md">
+        Carregando negociações
+      </p>
+    </q-inner-loading>
+    <div v-if="!loading">
+      <q-timeline
+        v-for="trade in trades"
+        :key="trade.id"
+        :layout="layout"
+        color="info"
+        dark
+      >
+        <q-timeline-entry
+          :title="
+            trade.user?.name || 'Usuário Anônimo'
+          "
+          :subtitle="formatDate(trade.createdAt)"
+          side="left"
+          icon="account_circle"
+        >
+          <h4
+            class="row justify-center text-bold bg-secondary rounded-borders"
+          >
+            Ofertou
+          </h4>
+          <div
+            class="row q-gutter-lg justify-end"
+            :class="{
+              'justify-center':
+                useQuasar().screen.lt.sm,
+              'justify-end':
+                !useQuasar().screen.lt.sm,
+            }"
+          >
+            <FlipCard
+              v-for="cardEntry in trade.tradeCards.filter(
+                card => card.type === 'OFFERING',
+              )"
+              :key="cardEntry.id"
+              :card="cardEntry.card"
+            />
+          </div>
+        </q-timeline-entry>
+        <q-timeline-entry
+          side="right"
+          icon="published_with_changes"
+        >
+          <h4
+            class="row justify-center text-bold bg-info rounded-borders"
+          >
+            Quer Receber
+          </h4>
+          <div
+            class="row q-gutter-lg"
+            :class="{
+              'justify-center':
+                useQuasar().screen.lt.sm,
+              'justify-start':
+                !useQuasar().screen.lt.sm,
+            }"
+          >
+            <FlipCard
+              v-for="cardEntry in trade.tradeCards.filter(
+                card => card.type === 'OFFERING',
+              )"
+              :key="cardEntry.id"
+              :card="cardEntry.card"
+            />
+          </div>
+        </q-timeline-entry>
+      </q-timeline>
+      <div class="q-pa-lg flex flex-center">
+        <q-pagination
+          v-model="page"
+          color="info"
+          :max="4"
+          boundary-links
+          @click="handlePageClick"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -96,6 +112,7 @@
 
   const instance = getCurrentInstance();
   const page = ref(1);
+  const loading = ref<boolean>(false);
 
   const trades = reactive<Trade[]>([]);
 
@@ -122,6 +139,7 @@
     page: number,
   ) => {
     try {
+      loading.value = true;
       const { status, data } = await getTrades(
         page,
       );
@@ -136,6 +154,8 @@
       showNegativeNotify(
         'Não foi possível buscar as informações de negociações',
       );
+    } finally {
+      loading.value = false;
     }
   };
 

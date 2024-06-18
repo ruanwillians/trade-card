@@ -106,9 +106,14 @@
       to: '/cards',
     },
     {
-      title: 'Trades',
-      icon: 'dashboard',
-      to: '/trades',
+      title: 'Criar Negociação',
+      icon: 'published_with_changes',
+      to: '/trade/create',
+    },
+    {
+      title: 'Ver negociações',
+      icon: 'published_with_changes',
+      to: '/trade',
     },
   ];
 
