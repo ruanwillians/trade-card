@@ -24,3 +24,14 @@ export const createTrade = async (
       return error;
     });
 };
+
+export const deleteTrade = async (id: string) => {
+  return await tradeCardApi
+    .delete(`/trades/${id}`)
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      return error;
+    });
+};

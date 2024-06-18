@@ -157,9 +157,9 @@
   .bg-image-user {
     background-image: url('src/assets/bg-user.png');
     background-size: cover;
-    background-position: left;
+    background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 150vh;
     width: 100%;
   }
 </style>

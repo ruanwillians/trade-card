@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row justify-evenly">
+  <q-page class="row justify-evenly q-pa-md">
     <q-table
       class="table text-white"
       :rows="allCards"
@@ -15,7 +15,7 @@
         <h1
           class="text-white q-ma-sm rounded-borders title text-bold"
         >
-          Todas as cartas
+          Todas cartas
         </h1>
       </template>
       <template v-slot:top-right>

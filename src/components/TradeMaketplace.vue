@@ -30,8 +30,23 @@
           side="left"
           icon="account_circle"
         >
+          <q-btn
+            v-if="
+              trade.userId === store.getUserId
+            "
+            icon="delete"
+            color="info"
+            @click="
+              () => confirmDeleteTrade(trade.id)
+            "
+          >
+            <q-tooltip>
+              Excluir negociação
+            </q-tooltip>
+          </q-btn>
+
           <h4
-            class="row justify-center text-bold bg-secondary rounded-borders"
+            class="row justify-center text-bold bg-secondary rounded-borders q-mt-md"
           >
             Ofertou
           </h4>
@@ -95,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useQuasar } from 'quasar';
+  import { Dialog, useQuasar } from 'quasar';
   import {
     computed,
     onBeforeMount,
@@ -104,11 +119,20 @@
     watch,
     getCurrentInstance,
   } from 'vue';
-  import { getTrades } from 'src/services/Trades';
+  import {
+    deleteTrade,
+    getTrades,
+  } from 'src/services/Trades';
   import { Trade } from '../types/Trades';
-  import { showNegativeNotify } from 'src/utils/plugins';
+  import {
+    showNegativeNotify,
+    showPositiveNotify,
+  } from 'src/utils/plugins';
   import FlipCard from '../components/FlipCard.vue';
   import { formatDate } from '../utils/FormatDate';
+  import { useUserStore } from 'src/stores/userStore';
+
+  const store = useUserStore();
 
   const instance = getCurrentInstance();
   const page = ref(1);
@@ -157,6 +181,47 @@
     } finally {
       loading.value = false;
     }
+  };
+
+  const deleteTradeByUser = async (
+    id: string,
+  ) => {
+    try {
+      const { status } = await deleteTrade(id);
+
+      if (status === 201) {
+        showPositiveNotify(
+          'Negociação excluída com sucesso',
+        );
+      }
+    } catch (error) {
+      showNegativeNotify(
+        'Não foi possível exluir a negociação, tente novamente',
+      );
+    }
+  };
+
+  const confirmDeleteTrade = (id: string) => {
+    Dialog.create({
+      color: 'info',
+      dark: true,
+      title: 'Excluir negociação',
+      message:
+        'Você deseja excluir a negociação?',
+      cancel: {
+        label: 'Cancelar',
+        flat: true,
+      },
+      ok: {
+        label: 'Excluir negociação',
+        color: 'info',
+      },
+      persistent: true,
+      style: 'min-width: 25vw;',
+    }).onOk(() => {
+      deleteTradeByUser(id);
+      getTradesPerPage(1);
+    });
   };
 
   const handlePageClick = () => {
