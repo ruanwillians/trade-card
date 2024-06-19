@@ -21,7 +21,6 @@
       behavior="mobile"
       bordered
       dark
-      class="col"
     >
       <div
         class="column justify-center items-center"
@@ -56,19 +55,6 @@
           v-bind="link"
         />
       </q-list>
-      <div class="row justify-center">
-        <q-btn
-          rounded
-          class="q-mt-xl"
-          color="white"
-          icon="logout"
-          flat
-          size="md"
-          label="Logout"
-          @click="logout"
-          style="font-size: 1.1em"
-        />
-      </div>
     </q-drawer>
 
     <q-page-container>
@@ -97,18 +83,16 @@
   import { useUserStore } from 'src/stores/userStore';
   import { useDeckStore } from 'src/stores/Deck';
   import Header from 'src/components/Header.vue';
-  import EssentialLink, {
-    EssentialLinkProps,
-  } from 'components/EssentialLink.vue';
+  import EssentialLink from 'components/EssentialLink.vue';
   import { Card } from 'src/types/Cards';
   import FlipCard from 'src/components/FlipCard.vue';
   import DeckCard from 'src/components/DeckCard.vue';
   import { getMeCards } from 'src/services/Cards';
   import { showNegativeNotify } from 'src/utils/plugins';
-  import { useRouter } from 'vue-router';
+  import { EssentialLinkProps } from 'src/types/Links';
 
   defineOptions({
-    name: 'MainLayout',
+    name: 'UserLayout',
   });
 
   onBeforeMount(async () => {
@@ -141,15 +125,9 @@
     userStore.getUsername,
   );
   const userCards = reactive<Card[]>([]);
-  const router = useRouter();
 
   const handleShowDeck = () => {
     deckStore.showDeck();
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    router.push('/');
   };
 
   const toggleLeftDrawer = () => {

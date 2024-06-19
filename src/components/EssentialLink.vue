@@ -25,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+  import { EssentialLinkProps } from 'src/types/Links';
   import { computed } from 'vue';
   import {
     useRouter,
@@ -34,12 +35,6 @@
   defineOptions({
     name: 'EssentialLink',
   });
-
-  export interface EssentialLinkProps {
-    title: string;
-    to: string;
-    icon?: string;
-  }
 
   const props = defineProps<EssentialLinkProps>();
 

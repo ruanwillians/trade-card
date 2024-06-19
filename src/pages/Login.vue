@@ -95,10 +95,14 @@
   } from 'src/utils/plugins';
   import { useRouter } from 'vue-router';
 
-  const email = ref('');
-  const password = ref('');
-  const visiblePassword = ref(false);
-  const loading = ref(false);
+  defineOptions({
+    name: 'HomePage',
+  });
+
+  const email = ref<string>('');
+  const password = ref<string>('');
+  const visiblePassword = ref<boolean>(false);
+  const loading = ref<boolean>(false);
   const userStore = useUserStore();
 
   const router = useRouter();
@@ -151,10 +155,6 @@
       password: password.value,
     };
   };
-
-  defineOptions({
-    name: 'HomePage',
-  });
 </script>
 
 <style>

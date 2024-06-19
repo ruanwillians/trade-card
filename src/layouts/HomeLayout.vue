@@ -26,11 +26,11 @@
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
   import Header from 'src/components/Header.vue';
+  import { RouteLink } from 'src/types/Links';
 
-  interface RouteLink {
-    to: string;
-    text: string;
-  }
+  defineOptions({
+    name: 'HomeLayout',
+  });
 
   const route = useRoute();
 
