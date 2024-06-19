@@ -140,12 +140,12 @@
 
   const router = useRouter();
 
-  const loading = ref(false);
-  const name = ref('');
-  const email = ref('');
-  const password = ref('');
-  const confirmPassword = ref('');
-  const visiblePassword = ref(false);
+  const loading = ref<boolean>(false);
+  const name = ref<string>('');
+  const email = ref<string>('');
+  const password = ref<string>('');
+  const confirmPassword = ref<string>('');
+  const visiblePassword = ref<boolean>(false);
 
   const onReset = () => {
     email.value = '';
