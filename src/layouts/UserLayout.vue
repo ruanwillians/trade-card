@@ -107,7 +107,7 @@
   import { EssentialLinkProps } from 'src/types/Links';
 
   defineOptions({
-    name: 'MainLayout',
+    name: 'UserLayout',
   });
 
   onBeforeMount(async () => {
