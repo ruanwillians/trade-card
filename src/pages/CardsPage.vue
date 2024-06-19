@@ -118,16 +118,20 @@
       'Aguarde carregando todas as cartas',
     );
     try {
-      const { data, status } = await getCards(
-        page.value,
-      );
-      if (status === 200) {
+      const response = await getCards(page.value);
+
+      if (response.status !== 200) {
+        console.log('aqui');
+        throw new Error();
+      } else {
         allCards.length = 0;
-        data.list.forEach((card: Card) => {
-          if (card.imageUrl) {
-            allCards.push(card);
-          }
-        });
+        response.data.list.forEach(
+          (card: Card) => {
+            if (card.imageUrl) {
+              allCards.push(card);
+            }
+          },
+        );
       }
     } catch (error) {
       showNegativeNotify(

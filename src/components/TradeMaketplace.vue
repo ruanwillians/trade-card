@@ -90,7 +90,7 @@
           >
             <FlipCard
               v-for="cardEntry in trade.tradeCards.filter(
-                card => card.type === 'OFFERING',
+                card => card.type === 'RECEIVING',
               )"
               :key="cardEntry.id"
               :card="cardEntry.card"
@@ -166,16 +166,16 @@
   ) => {
     try {
       loading.value = true;
-      const { status, data } = await getTrades(
-        page,
-      );
+      const response = await getTrades(page);
 
-      if (status === 200) {
-        trades.length = 0;
-        data.list.forEach((item: Trade) =>
-          trades.push(item),
-        );
+      if (response.status !== 200) {
+        throw new Error();
       }
+
+      trades.length = 0;
+      response.data.list.forEach((item: Trade) =>
+        trades.push(item),
+      );
     } catch (error) {
       showNegativeNotify(
         'Não foi possível buscar as informações de negociações',
@@ -189,13 +189,15 @@
     id: string,
   ) => {
     try {
-      const { status } = await deleteTrade(id);
+      const response = await deleteTrade(id);
 
-      if (status === 201) {
-        showPositiveNotify(
-          'Negociação excluída com sucesso',
-        );
+      if (response.status !== 200) {
+        throw new Error();
       }
+
+      showPositiveNotify(
+        'Negociação excluída com sucesso',
+      );
     } catch (error) {
       showNegativeNotify(
         'Não foi possível exluir a negociação, tente novamente',

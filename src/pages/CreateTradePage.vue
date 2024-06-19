@@ -21,7 +21,34 @@
       class="bg-transparent"
     >
       <q-tab-panel name="offering">
+        <div
+          style="height: 90vh"
+          class="row justify-center items-center"
+          v-if="userCards.length === 0"
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            "
+          >
+            <h5
+              class="text-white q-ma-none text-bold"
+            >
+              Você ainda não possui cartas!
+            </h5>
+            <q-btn
+              @click="gotToAllCards"
+              color="info"
+              label="Adicionar Cartas"
+              style="margin-top: 10px"
+            />
+          </div>
+        </div>
+
         <q-table
+          v-else
           class="table text-white"
           :rows="userCards"
           :columns="columns"
@@ -305,17 +332,18 @@
       'Aguarde carregando todas as cartas',
     );
     try {
-      const { data, status } = await getCards(
-        page.value,
-      );
-      if (status === 200) {
-        allCards.length = 0;
-        data.list.forEach((card: Card) => {
-          if (card.imageUrl) {
-            allCards.push(card);
-          }
-        });
+      const response = await getCards(page.value);
+
+      if (response.status !== 200) {
+        throw new Error();
       }
+
+      allCards.length = 0;
+      response.data.list.forEach((card: Card) => {
+        if (card.imageUrl) {
+          allCards.push(card);
+        }
+      });
     } catch (error) {
       showNegativeNotify(
         'Não foi possível realizar a busca dos Cards',
@@ -330,15 +358,20 @@
       'Aguarde carregando cartas do deck',
     );
     try {
-      const { data, status } = await getMeCards();
-      if (status === 200) {
-        userCards.length = 0;
-        data.cards.forEach((card: Card) => {
+      const response = await getMeCards();
+
+      if (response.status !== 200) {
+        throw new Error();
+      }
+
+      userCards.length = 0;
+      response.data.cards.forEach(
+        (card: Card) => {
           if (card.imageUrl) {
             userCards.push(card);
           }
-        });
-      }
+        },
+      );
     } catch (error) {
       showNegativeNotify(
         'Não foi possível realizar a busca dos Cards',
@@ -369,20 +402,26 @@
       showLoading('Aguarde, criando negociação');
       const body = generateBody();
 
-      const { status } = await createTrade(body);
+      const response = await createTrade(body);
 
-      if (status === 201) {
-        showPositiveNotify(
-          'Negociação criada com sucesso',
-        );
-        router.push('/trade');
+      if (response.status !== 201) {
+        throw new Error();
       }
+
+      showPositiveNotify(
+        'Negociação criada com sucesso',
+      );
+      await router.push('/trade');
     } catch (error) {
       showNegativeNotify(
-        'Não foi possível criar a negociação, tente novamente',
+        'Houve um erro ao criar a negociação, tente novamente',
       );
     } finally {
       hideLoading();
     }
+  };
+
+  const gotToAllCards = () => {
+    router.push('/cards');
   };
 </script>
