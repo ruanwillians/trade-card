@@ -21,6 +21,7 @@
       behavior="mobile"
       bordered
       dark
+      class="col"
     >
       <div
         class="column justify-center items-center"
@@ -55,6 +56,19 @@
           v-bind="link"
         />
       </q-list>
+      <div class="row justify-center">
+        <q-btn
+          rounded
+          class="q-mt-xl"
+          color="white"
+          icon="logout"
+          flat
+          size="md"
+          label="Logout"
+          @click="logout"
+          style="font-size: 1.1em"
+        />
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -91,6 +105,7 @@
   import DeckCard from 'src/components/DeckCard.vue';
   import { getMeCards } from 'src/services/Cards';
   import { showNegativeNotify } from 'src/utils/plugins';
+  import { useRouter } from 'vue-router';
 
   defineOptions({
     name: 'MainLayout',
@@ -126,9 +141,15 @@
     userStore.getUsername,
   );
   const userCards = reactive<Card[]>([]);
+  const router = useRouter();
 
   const handleShowDeck = () => {
     deckStore.showDeck();
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    router.push('/');
   };
 
   const toggleLeftDrawer = () => {
