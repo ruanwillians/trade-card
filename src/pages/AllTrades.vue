@@ -1,6 +1,6 @@
 <template>
   <q-page
-    class="row q-pa-md"
+    class="q-pa-md"
     id="tradeMarketplacePage"
   >
     <div>
@@ -9,9 +9,11 @@
       >
         Negociações
       </h1>
-      <TradeMaketplace
-        @actionScroll="scrollToNegotiations"
-      />
+      <div class="col justify-center">
+        <TradeMaketplace
+          @actionScroll="scrollToNegotiations"
+        />
+      </div>
     </div>
   </q-page>
 </template>

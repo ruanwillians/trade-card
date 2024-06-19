@@ -41,8 +41,7 @@
           <CardTrade :card="props.row">
             <q-btn
               rounded
-              style="width: 90%"
-              class="glossy q-mb-md"
+              class="glossy q-mb-md q-pa-sm btn-card"
               color="info"
               label="Adicionar ao deck"
               @click="confirm(props.row)"
@@ -197,61 +196,8 @@
   };
 </script>
 
-<style scoped>
-  .table {
-    min-width: 80vw;
-    min-height: 100vh;
-  }
-
-  .card {
-    width: 80%;
-    height: auto;
-    margin: 3em;
-    border-radius: 25px;
-    background-color: rgb(29, 9, 46);
-    border: 1px solid rgb(78, 33, 99);
-  }
-
-  .subtitle-card {
-    height: 10vh;
-    display: flex;
-    justify-items: center;
-    justify-content: center;
-  }
-
-  .filter {
-    width: 30vw;
-  }
-
-  .title {
-    font-size: 4rem;
-    line-height: 1;
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 720px) {
-    .subtitle-card {
-      height: 12vh;
-    }
-
-    .title {
-      font-size: 3rem;
-      text-align: center;
-    }
-
-    .table {
-      min-width: 50vw;
-      min-height: 85vh;
-    }
-  }
-
-  @media (max-width: 1096px) {
-    .filter {
-      width: 90vw;
-    }
-
-    .title {
-      margin: 0.5em 0;
-    }
+<style>
+  .btn-card {
+    width: 75%;
   }
 </style>

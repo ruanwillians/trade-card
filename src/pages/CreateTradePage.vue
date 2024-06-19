@@ -1,29 +1,22 @@
 <template>
-  <q-page class="q-ma-none">
+  <q-page>
     <q-tabs
-      v-model="tab"
+      v-model="currentTab"
+      breakpoint="600"
       indicator-color="info"
       class="text-white"
     >
       <q-tab
+        v-for="tab in tabs"
+        :key="tab.name"
+        :name="tab.name"
+        :icon="tab.icon"
+        :label="tab.label"
         class="q-pa-md"
-        name="offering"
-        icon="dashboard"
-        label="Selecione as cartas que seja oferecer"
-      />
-      <q-tab
-        name="receiving"
-        icon="dashboard_customize"
-        label="Selecione as cartas que seja receber"
-      />
-      <q-tab
-        name="confirmTrade"
-        icon="published_with_changes"
-        label="Confirmar negociação"
       />
     </q-tabs>
     <q-tab-panels
-      v-model="tab"
+      v-model="currentTab"
       animated
       class="bg-transparent"
     >
@@ -139,62 +132,78 @@
         name="confirmTrade"
         class="row justify-center q-col-gutter-md"
       >
-        <DeckTrade
-          :cards="offeringSelected"
-          title="Oferecer"
-          color="bg-secondary"
-        />
-        <DeckTrade
-          :cards="receivingSelected"
-          title="Quer receber"
-          color="bg-info"
-        />
-        <div class="col-12 q-ma-lg">
-          <div
-            class="row justify-center q-gutter-sm"
+        <div
+          class="col-xs-12 col-sm-12 col-md-12 col-lg-5"
+        >
+          <DeckTrade
+            :cards="offeringSelected"
+            title="Oferecer"
+            color="bg-secondary"
+          />
+          <h6
+            v-if="offeringSelected.length === 0"
+            class="text-bold text-white text-center q-ma-xl"
           >
+            Você ainda não selecionou nenhuma
+            carta que deseja oferecer, selecione e
+            confirme a negociação.
+          </h6>
+        </div>
+        <div
+          class="col-lg-2 flex items-center justify-center gt-md"
+        >
+          <div class="row justify-center">
+            <q-icon
+              class="q-mt-md"
+              name="published_with_changes"
+              size="10rem"
+              color="white"
+            ></q-icon>
+            <q-btn
+              v-if="
+                receivingSelected.length > 0 &&
+                offeringSelected.length > 0
+              "
+              size="md"
+              class="q-pa-md q-mt-md q-px-lg gt-md"
+              label="Confirmar negociação"
+              color="primary"
+              @click="confirm"
+            />
+          </div>
+        </div>
+
+        <div
+          class="col-xs-12 col-sm-12 col-md-12 col-lg-5"
+        >
+          <DeckTrade
+            :cards="receivingSelected"
+            title="Quer receber"
+            color="bg-info"
+          />
+          <h6
+            v-if="receivingSelected.length === 0"
+            class="text-bold text-white text-center q-ma-xl"
+          >
+            Você ainda não selecionou nenhuma
+            carta que deseja receber, selecione e
+            confirme a negociação.
+          </h6>
+        </div>
+
+        <div class="col-12 q-ma-xl">
+          <div class="row justify-center">
             <q-btn
               v-if="
                 receivingSelected.length > 0 &&
                 offeringSelected.length > 0
               "
               size="lg"
-              class="q-pa-md q-px-xl"
+              class="q-pa-md q-px-lg lt-lg"
               label="Confirmar negociação"
               color="primary"
               @click="confirm"
             />
-            <h6
-              v-else-if="
-                receivingSelected.length === 0 &&
-                offeringSelected.length === 0
-              "
-              class="text-bold text-white text-center"
-            >
-              Selecione as cartas que deseja
-              oferecer e receber para criar uma
-              negociação.
-            </h6>
-            <h6
-              v-else-if="
-                receivingSelected.length === 0
-              "
-              class="text-bold text-white text-center"
-            >
-              Você ainda não selecionou nenhuma
-              carta que deseja receber, selecione
-              e confirme a negociação.
-            </h6>
-            <h6
-              v-else-if="
-                offeringSelected.length === 0
-              "
-              class="text-bold text-white text-center"
-            >
-              Você ainda não selecionou nenhuma
-              carta que deseja oferecer, selecione
-              e confirme a negociação.
-            </h6>
           </div>
         </div>
       </q-tab-panel>
@@ -223,7 +232,7 @@
     showNegativeNotify,
     showPositiveNotify,
   } from 'src/utils/plugins';
-  import { Column } from 'src/types/Table';
+  import { Column, Tabs } from 'src/types/Table';
   import CardTrade from '../components/CardTrade.vue';
   import DeckTrade from '../components/DeckTrade.vue';
   import { createTrade } from 'src/services/Trades';
@@ -235,13 +244,33 @@
 
   const router = useRouter();
 
-  const tab = ref<string>('offering');
+  const currentTab = ref<string>('offering');
   const page = ref<number>(1);
   const filter = ref<string>('');
   const receivingSelected = ref<Card[]>([]);
   const offeringSelected = ref<Card[]>([]);
   const allCards = reactive<Card[]>([]);
   const userCards = reactive<Card[]>([]);
+
+  const tabs: Tabs[] = [
+    {
+      name: 'offering',
+      icon: 'dashboard',
+      label:
+        'Selecione as cartas que deseja oferecer',
+    },
+    {
+      name: 'receiving',
+      icon: 'dashboard_customize',
+      label:
+        'Selecione as cartas que deseja receber',
+    },
+    {
+      name: 'confirmTrade',
+      icon: 'published_with_changes',
+      label: 'Confirmar negociação',
+    },
+  ];
 
   const columns: Column[] = [
     {
@@ -357,62 +386,3 @@
     }
   };
 </script>
-
-<style scoped>
-  .table {
-    min-width: 80vw;
-    min-height: 100vh;
-  }
-
-  .card {
-    width: 80%;
-    height: auto;
-    margin: 3em;
-    border-radius: 25px;
-    background-color: rgb(29, 9, 46);
-    border: 1px solid rgb(78, 33, 99);
-  }
-
-  .subtitle-card {
-    height: 10vh;
-    display: flex;
-    justify-items: center;
-    justify-content: center;
-  }
-
-  .filter {
-    width: 30vw;
-  }
-
-  .title {
-    font-size: 4rem;
-    line-height: 1;
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 720px) {
-    .subtitle-card {
-      height: 12vh;
-    }
-
-    .title {
-      font-size: 3rem;
-      text-align: center;
-    }
-
-    .table {
-      min-width: 50vw;
-      min-height: 85vh;
-    }
-  }
-
-  @media (max-width: 1096px) {
-    .filter {
-      width: 90vw;
-    }
-
-    .title {
-      margin: 0.5em 0;
-    }
-  }
-</style>

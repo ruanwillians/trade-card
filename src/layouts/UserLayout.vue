@@ -18,6 +18,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
+      behavior="mobile"
       bordered
       dark
     >
@@ -112,7 +113,7 @@
     },
     {
       title: 'Ver negociações',
-      icon: 'published_with_changes',
+      icon: 'shop',
       to: '/trade',
     },
   ];
