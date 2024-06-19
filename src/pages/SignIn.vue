@@ -182,16 +182,14 @@
       ) {
         const response = await SignInUser(body);
 
-        if (response.status === 201) {
-          showPositiveNotify(
-            'Usuário Criado com sucesso',
-          );
-          router.push('/login');
-        } else {
-          showNegativeNotify(
-            'Não foi possível realizar o login',
-          );
+        if (response.status !== 201) {
+          throw new Error();
         }
+
+        showPositiveNotify(
+          'Usuário Criado com sucesso',
+        );
+        router.push('/login');
       } else {
       }
     } catch (error) {

@@ -124,22 +124,20 @@
 
       const response = await loginUser(body);
 
-      if (response.status === 200) {
-        const user = response.data.user;
-        localStorage.setItem(
-          'Token',
-          response.data.token,
-        );
-        userStore.setUser(user);
-        showPositiveNotify(
-          `Seja bem vindo ${user.name}`,
-        );
-        router.push('/cards');
-      } else {
-        showNegativeNotify(
-          'Não foi possível realizar o login, verifique seu email e senha',
-        );
+      if (response.status !== 200) {
+        throw new Error();
       }
+
+      const user = response.data.user;
+      localStorage.setItem(
+        'Token',
+        response.data.token,
+      );
+      userStore.setUser(user);
+      showPositiveNotify(
+        `Seja bem vindo ${user.name}`,
+      );
+      router.push('/cards');
     } catch (error) {
       showNegativeNotify(
         'Não foi possível realizar o login, tente novamente mais tarde',

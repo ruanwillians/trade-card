@@ -78,7 +78,11 @@
     </q-page-container>
 
     <DeckCard>
+      <h6 v-if="userCards.length === 0">
+        Não há cartas no seu deck
+      </h6>
       <FlipCard
+        v-else
         v-for="card in userCards"
         :key="card.id"
         :card="card"
@@ -157,13 +161,16 @@
 
   const getUserCards = async () => {
     try {
-      const { data, status } = await getMeCards();
-      if (status === 200) {
-        userCards.length = 0;
-        data.cards.forEach((item: Card) =>
-          userCards.push(item),
-        );
+      const response = await getMeCards();
+
+      if (response.status !== 200) {
+        throw new Error();
       }
+
+      userCards.length = 0;
+      response.data.cards.forEach((item: Card) =>
+        userCards.push(item),
+      );
     } catch (error) {
       showNegativeNotify(
         'Não foi possível realizar a busca dos Cards',
