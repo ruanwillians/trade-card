@@ -24,7 +24,9 @@
         <div
           style="height: 90vh"
           class="row justify-center items-center"
-          v-if="userCards.length === 0"
+          v-if="
+            !loading && userCards.length === 0
+          "
         >
           <div
             style="
@@ -278,6 +280,7 @@
   const offeringSelected = ref<Card[]>([]);
   const allCards = reactive<Card[]>([]);
   const userCards = reactive<Card[]>([]);
+  const loading = ref<boolean>();
 
   const tabs: Tabs[] = [
     {
@@ -321,10 +324,12 @@
   ];
 
   onBeforeMount(async () => {
+    loading.value = true;
     await Promise.all([
       getAllCards(),
       getCardsUser(),
     ]);
+    loading.value = false;
   });
 
   const getAllCards = async () => {
