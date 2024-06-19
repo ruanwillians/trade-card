@@ -8,7 +8,7 @@
     >
       {{ title }}
     </h4>
-    <div class="row justify-center">
+    <div class="row justify-center q-gutter-lg">
       <FlipCard
         :card="card"
         v-for="card in cards"

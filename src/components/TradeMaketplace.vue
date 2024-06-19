@@ -5,6 +5,7 @@
       :showing="loading"
       label-class="text-primary"
       label-style="font-size: 1.1em"
+      style="height: 100vh"
     >
       <q-spinner-bars
         size="50px"
@@ -31,6 +32,7 @@
           icon="account_circle"
         >
           <q-btn
+            round
             v-if="
               trade.userId === store.getUserId
             "

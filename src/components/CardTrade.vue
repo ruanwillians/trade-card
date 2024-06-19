@@ -7,7 +7,7 @@
       />
       <div class="subtitle-card">
         <h5
-          class="row q-ma-none q-my-md q-mx-sm text-center text-bold items-center"
+          class="row q-ma-none q-my-md q-mx-md text-center text-bold items-center"
         >
           {{ props.card.name }}
         </h5>
@@ -29,9 +29,10 @@
 
 <style scoped>
   .card {
-    width: 80%;
+    width: 85%;
     height: auto;
-    margin: 3em;
+    margin: 2em 0 2em 2em;
+    padding-top: 1em;
     border-radius: 25px;
     background-color: rgb(29, 9, 46);
     border: 1px solid rgb(78, 33, 99);

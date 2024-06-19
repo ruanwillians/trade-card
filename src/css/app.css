@@ -1,3 +1,41 @@
 body {
   background-color: #1a0130;
 }
+
+.table {
+  min-width: 80vw;
+  min-height: 100vh;
+}
+
+.filter {
+  width: 30vw;
+}
+
+.title {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .table {
+    min-width: 50vw;
+    min-height: 85vh;
+  }
+}
+
+@media (max-width: 1096px) {
+  .filter {
+    width: 90vw;
+    padding-right: 1em;
+  }
+
+  .title {
+    margin: 0.5em 0;
+  }
+}

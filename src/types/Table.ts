@@ -6,3 +6,9 @@ export type Column = {
   align?: 'center' | 'left' | 'right';
   sortable?: boolean;
 };
+
+export type Tabs = {
+  name: string;
+  label: string;
+  icon: string;
+};
