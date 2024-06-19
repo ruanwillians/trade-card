@@ -102,7 +102,7 @@
         <q-pagination
           v-model="page"
           color="info"
-          :max="4"
+          :max="7"
           boundary-links
           @click="handlePageClick"
         />
@@ -220,9 +220,9 @@
       },
       persistent: true,
       style: 'min-width: 25vw;',
-    }).onOk(() => {
-      deleteTradeByUser(id);
-      getTradesPerPage(1);
+    }).onOk(async () => {
+      await deleteTradeByUser(id);
+      await getTradesPerPage(1);
     });
   };
 
